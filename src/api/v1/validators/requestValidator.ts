@@ -1,8 +1,16 @@
+// -- == [[ CONFIG ]] == -- \\
+
+// Import types from express
 import {
     type Request,
     type Response,
 } from 'express';
 
+
+
+// -- == [[ VALIDATOR METHODS ]] == -- \\
+
+// Validates whether the req has headers and has 'content-type' set to 'application/json'
 const ValidateRequestHeaders = (req: Request): boolean | string => {
 
     const reqHeaders = req.headers;
@@ -14,6 +22,7 @@ const ValidateRequestHeaders = (req: Request): boolean | string => {
 
 }
 
+// Validates whether the req has a body
 const ValidateRequestBody = (req: Request): boolean | string => {
 
     const reqBody = req.body;
@@ -39,4 +48,11 @@ const ValidateRequestAll = (req: Request): (boolean | string) => {
 
 }
 
-export { ValidateRequestHeaders, ValidateRequestAll }
+
+
+// -- == [[ EXPORT VALIDATOR METHODS ]] == -- \\
+export {
+    ValidateRequestHeaders,
+    ValidateRequestBody,
+    ValidateRequestAll
+}
