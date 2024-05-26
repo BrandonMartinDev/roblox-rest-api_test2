@@ -12,6 +12,9 @@ import {
     RespondWithSuccess
 } from '@v1services/respondService.js'
 
+// Import validator methods
+import { ValidateGroupShoutAll } from "@v1validators/groupshoutValidator.js";
+
 import { SetGroupShout } from "@v1services/groupshoutService.js";
 
 
@@ -26,22 +29,23 @@ export const GetGroupShout = (req: Request, res: Response) => {
 // POST /api/v1/groupshout
 export const ChangeGroupShout = (req: Request, res: Response) => {
 
-    const reqBody = req.body;
-    const newShout = reqBody?.newShout
+    const groupShoutValidation = ValidateGroupShoutAll(req);
 
-    if (!reqBody) return RespondWithError(res, "Something went wrong with getting the request body", 500)
-    if (!newShout) return RespondWithError(res, "newShout is missing on request body", 400)
+    if (typeof groupShoutValidation === 'string') return RespondWithError(res, groupShoutValidation, 400);
+
+    const reqBody = req.body;
+    const newShout = reqBody?.newShout;
 
     try {
 
         SetGroupShout(newShout);
 
-        console.log(`${req.ip} successfully changed the group shout to: '${newShout}'`);
+        console.log(`groupShoutController (ChangeGroupShout) | ${req.ip} successfully changed the group shout to: '${newShout}'`);
 
-        return RespondWithSuccess(res, `Successfully changed group shout to ${newShout}`, 200);
+        return RespondWithSuccess(res, `Successfully changed group shout to '${newShout}'`, 200);
 
     } catch (error) {
-        return RespondWithError(res, `There was an error setting the group shout to ${newShout}`, 500);
+        return RespondWithError(res, `There was an error setting the group shout to '${newShout}'`, 500);
     }
 
 }
