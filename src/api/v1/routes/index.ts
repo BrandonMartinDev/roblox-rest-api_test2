@@ -3,7 +3,7 @@
 // Import express
 import express from 'express';
 
-// Import Services
+// Import services methods
 import {
     RespondWithError,
     RespondWithSuccess

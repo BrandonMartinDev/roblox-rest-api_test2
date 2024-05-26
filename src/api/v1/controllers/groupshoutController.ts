@@ -1,8 +1,12 @@
+// -- == [[ CONFIG ]] == -- \\
+
+// Import types from express
 import {
     type Request,
     type Response
 } from "express";
 
+// Import services methods
 import {
     RespondWithError,
     RespondWithSuccess
@@ -10,10 +14,16 @@ import {
 
 import { SetGroupShout } from "@v1services/groupshoutService.js";
 
+
+
+// -- == [[ CONTROLLER METHODS ]] == -- \\
+
+// GET /api/v1/groupshout
 export const GetGroupShout = (req: Request, res: Response) => {
     return RespondWithSuccess(res, `${req.originalUrl} is OK`, 200);
 }
 
+// POST /api/v1/groupshout
 export const ChangeGroupShout = (req: Request, res: Response) => {
 
     const reqBody = req.body;
