@@ -6,6 +6,9 @@ import {
     type Response,
 } from 'express';
 
+// Import validator methods
+import { ValidateApiKey } from './apiKeyValidator.js';
+
 
 
 // -- == [[ VALIDATOR METHODS ]] == -- \\
@@ -33,12 +36,14 @@ const ValidateRequestBody = (req: Request): boolean | string => {
 
 }
 
+
 const ValidateRequestAll = (req: Request): (boolean | string) => {
 
     const headerValidation = ValidateRequestHeaders(req);
-    const bodyValidation = ValidateRequestBody(req);
+    const bodyValidation = ValidateRequestBody(req);    
+    const apiKeyValidation = ValidateApiKey(req.headers.authorization || "");
 
-    const validations = [headerValidation, bodyValidation];
+    const validations = [headerValidation, bodyValidation, apiKeyValidation];
 
     for (const validation of validations) {
         if (typeof validation === 'string') return validation;
@@ -51,6 +56,7 @@ const ValidateRequestAll = (req: Request): (boolean | string) => {
 
 
 // -- == [[ EXPORT VALIDATOR METHODS ]] == -- \\
+
 export {
     ValidateRequestHeaders,
     ValidateRequestBody,
