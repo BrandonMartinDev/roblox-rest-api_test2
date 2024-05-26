@@ -21,7 +21,7 @@ import {
 import {
     RespondWithError,
     RespondWithSuccess
-} from './api/v1/services/respondService.js';
+} from '@v1services/respondService.js';
 
 
 // Import routers
@@ -37,12 +37,14 @@ app.use(`${API_URL}/`, v1Router);
 
 // -- == [[ CONFIG DEFAULT ENDPOINTS ]] == -- \\
 
+// GET '/'
 app.get('/', (req, res) => {
     RespondWithSuccess(res, 'Server is OK', 200);
 })
 
+// GET ?
 app.get('*', (req, res) => {
-    RespondWithError(res, `${req.originalUrl} is not a valid endpoint. Please try: /api/v1/{ENDPOINT_HERE}`, 404);
+    RespondWithError(res, `INVALID_ENDPOINT`, 404);
 })
 
 
