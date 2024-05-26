@@ -26,6 +26,11 @@ v1Router.use('/groupshout', groupShoutRouter);
 // -- == [[ CONFIG DEFAULT ENDPOINTS ]] == -- \\
 
 // GET /api/v1/
+v1Router.get('/', (req, res) => {
+    RespondWithSuccess(res, `${req.originalUrl} is OK`, 200)
+})
+
+// GET /api/v1/?
 v1Router.get('*', (req, res) => {
     RespondWithError(res, 'INVALID_ENDPOINT', 404)
 })
