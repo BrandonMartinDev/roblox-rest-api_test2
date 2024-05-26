@@ -1,10 +1,19 @@
+// -- == [[ CONFIG ]] == -- \\
+
+// Import types from express
 import {
     type Request,
     type Response,
 } from 'express';
 
+// Import validator methods
 import { ValidateRequestAll } from './requestValidator.js';
 
+
+
+// -- == [[ VALIDATOR METHODS ]] == -- \\
+
+// Validates request body has 'newShout' value
 const ValidateGroupShoutBody = (req: Request) => {
 
     const reqBody = req.body;
@@ -29,5 +38,9 @@ const ValidateGroupShoutAll = (req: Request): boolean | string => {
     return true;
 
 }
+
+
+
+// -- == [[ EXPORT VALIDATOR METHODS ]] == -- \\
 
 export { ValidateGroupShoutAll }
