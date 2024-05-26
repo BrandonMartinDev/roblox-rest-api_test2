@@ -19,8 +19,22 @@ export const RespondWithSuccess = (res: Response, successMessage: string, status
 
 export const RespondWithError = (res: Response, errorMessage: string, errorCode: number) => {
 
+    let resMessage: string;
+
+    switch (errorMessage) {
+
+        case "INVALID_ENDPOINT":
+            resMessage = `Endpoint invalid! Please use: api/v1/{ENDPOINT_HERE}`;
+            break;
+
+        default:
+            resMessage = errorMessage;
+
+    }
+
     const responseError: ServerResponseError = {
-        error: errorMessage
+        error: resMessage,
+        code: errorCode
     }
 
     res.status(errorCode).json(responseError);
