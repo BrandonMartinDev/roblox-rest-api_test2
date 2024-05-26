@@ -4,4 +4,5 @@ export type ServerResponseSuccess = {
 
 export type ServerResponseError = {
     error: string
+    code?: number
 }
