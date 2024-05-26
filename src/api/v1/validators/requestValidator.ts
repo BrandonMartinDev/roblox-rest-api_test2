@@ -40,7 +40,7 @@ const ValidateRequestBody = (req: Request): boolean | string => {
 const ValidateRequestAll = (req: Request): (boolean | string) => {
 
     const headerValidation = ValidateRequestHeaders(req);
-    const bodyValidation = ValidateRequestBody(req);    
+    const bodyValidation = ValidateRequestBody(req);
     const apiKeyValidation = ValidateApiKey(req.headers.authorization || "");
 
     const validations = [headerValidation, bodyValidation, apiKeyValidation];
