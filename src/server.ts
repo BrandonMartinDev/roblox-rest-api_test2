@@ -37,12 +37,12 @@ app.use(`${API_URL}/`, v1Router);
 
 // -- == [[ CONFIG DEFAULT ENDPOINTS ]] == -- \\
 
-// GET '/'
+// GET /
 app.get('/', (req, res) => {
     RespondWithSuccess(res, 'Server is OK', 200);
 })
 
-// GET ?
+// GET /?
 app.get('*', (req, res) => {
     RespondWithError(res, `INVALID_ENDPOINT`, 404);
 })
