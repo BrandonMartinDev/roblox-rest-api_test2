@@ -39,7 +39,7 @@ app.use(`${API_URL}/`, v1Router);
 
 // GET /
 app.get('/', (req, res) => {
-    RespondWithSuccess(res, 'Server is OK', 200);
+    RespondWithSuccess(res, 'Server is OK | Please use: api/v1/{ENDPOINT_HERE}', 200);
 })
 
 // GET /?
