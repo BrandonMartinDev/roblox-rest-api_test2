@@ -13,6 +13,8 @@ export const RespondWithSuccess = (res: Response, successMessage: string, status
 
     res.status(statusCode).json(responseSuccess);
 
+    console.log(`Server sent back success response: ${successMessage}`);
+
     return responseSuccess;
 
 }
@@ -38,6 +40,8 @@ export const RespondWithError = (res: Response, errorMessage: string, errorCode:
     }
 
     res.status(errorCode).json(responseError);
+
+    console.log(`Server sent back error response: ${resMessage}`);
 
     return responseError;
 
