@@ -1,5 +1,7 @@
+// Import defaults
 import { RATE_LIMIT } from "@v1config/defaults.js";
-import { RateLimitType } from "@/api/v1/types/union-types.js";
+import {type ValidatorReturnTupleValue} from "@v1types/main-types.js"
+import { RateLimitType } from "@v1types/union-types.js";
 
 let RATE_LIMIT_CACHE: any = {};
 
@@ -27,9 +29,9 @@ function addRequestToIPRateLimit(ip: string, typeOfRequest: RateLimitType) {
 
 }
 
-function IPCanRequest(ip: string | undefined, typeOfRequest: RateLimitType): string | boolean {
+function IPCanRequest(ip: string | undefined, typeOfRequest: RateLimitType): ValidatorReturnTupleValue {
 
-    if (!ip) return false;
+    if (!ip) return [`Ip does not exist!`, 400];
 
     addRequestToIPRateLimit(ip, typeOfRequest);
 
@@ -41,14 +43,14 @@ function IPCanRequest(ip: string | undefined, typeOfRequest: RateLimitType): str
     }
 
     if (!RATE_LIMIT_CACHE_FOR_REQUEST[ip]) {
-        return true;
+        return [true, 200];
     }
 
     if (RATE_LIMIT_CACHE_FOR_REQUEST[ip] <= RATE_LIMIT) {
-        return true;
+        return [true, 200];
     }
 
-    return `${ip} has requested over the ${typeOfRequest} rate limit: ${RATE_LIMIT_CACHE_FOR_REQUEST[ip]} requests`;
+    return [`${ip} has requested over the ${typeOfRequest} rate limit: ${RATE_LIMIT_CACHE_FOR_REQUEST[ip]} requests`, 429];
 
 }
 

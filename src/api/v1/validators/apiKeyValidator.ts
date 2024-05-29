@@ -11,11 +11,11 @@ import {
 // -- == [[ VALIDATOR METHODS ]] == -- \\
 
 // Validates whether the api key is the correct api key
-const ValidateApiKey = (apiKeyProvided: string): boolean | string => {
+const ValidateApiKey = (apiKeyProvided: string): [boolean | string, number] => {
 
-    if (!(apiKeyProvided === process.env.API_KEY)) return 'Invalid apiKey provided. Please make sure you have set the authorization header to a valid api key.';
+    if (!(apiKeyProvided === process.env.API_KEY)) return ['Invalid apiKey provided. Please make sure you have set the authorization header to a valid api key.', 401];
 
-    return true;
+    return [true, 200];
 
 }
 

@@ -28,7 +28,7 @@ import { SetGroupShout } from "@v1services/groupshoutService.js";
 export const GetGroupShout = (req: Request, res: Response) => {
     
     const rateLimitValidation = IPCanRequest(req.ip, "groupshout");    
-    if (typeof rateLimitValidation === 'string') return RespondWithError(res, rateLimitValidation, 400);
+    if (typeof rateLimitValidation[0] === 'string') return RespondWithError(res, rateLimitValidation[0], rateLimitValidation[1]);
 
     return RespondWithSuccess(res, `${req.originalUrl} is OK`, 200);
     
@@ -39,7 +39,7 @@ export const ChangeGroupShout = (req: Request, res: Response) => {
 
     const groupShoutValidation = ValidateGroupShoutAll(req);
 
-    if (typeof groupShoutValidation === 'string') return RespondWithError(res, groupShoutValidation, 400);
+    if (typeof groupShoutValidation[0] === 'string') return RespondWithError(res, groupShoutValidation[0], groupShoutValidation[1]);
 
     const reqBody = req.body;
     const newShout = reqBody?.newShout;

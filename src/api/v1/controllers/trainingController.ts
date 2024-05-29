@@ -29,7 +29,7 @@ import IPCanRequest from '../validators/ratelimitValidator.js';
 export const GetTraining = (req: Request, res: Response) => {
     
     const requestValidate = IPCanRequest(req.ip, "training");
-    if (typeof requestValidate === 'string') return RespondWithError(res, requestValidate, 400);
+    if (typeof requestValidate[0] === 'string') return RespondWithError(res, requestValidate[0], requestValidate[1]);
     
     return RespondWithSuccess(res, `${req.originalUrl} is OK`, 200);
     
@@ -40,7 +40,7 @@ export const StartTraining = (req: Request, res: Response) => {
 
     const requestValidate = ValidateTrainingAll(req);
 
-    if (typeof requestValidate === 'string') return RespondWithError(res, requestValidate, 400);
+    if (typeof requestValidate[0] === 'string') return RespondWithError(res, requestValidate[0], requestValidate[1]);
 
     SetGroupShout(START_TRAINING_MESSAGE);
 

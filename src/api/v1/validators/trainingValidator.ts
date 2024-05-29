@@ -5,6 +5,11 @@ import {
     type Request,
 } from 'express';
 
+
+// Import default types
+import { type ValidatorReturnTupleValue } from "@v1types/main-types.js";
+
+
 // Import validator methods
 import { ValidateRequestAll } from './requestValidator.js';
 import IPCanRequest from './ratelimitValidator.js';
@@ -14,19 +19,19 @@ import IPCanRequest from './ratelimitValidator.js';
 // -- == [[ VALIDATOR METHODS ]] == -- \\
 
 
-const ValidateTrainingAll = (req: Request): boolean | string => {
+const ValidateTrainingAll = (req: Request): ValidatorReturnTupleValue => {
 
     const requestValidation = ValidateRequestAll(req);
 
-    const rateLimitValidation = IPCanRequest(req.ip, "training");    
+    const rateLimitValidation = IPCanRequest(req.ip, "training");
 
     const validations = [requestValidation, rateLimitValidation];
 
     for (const validation of validations) {
-        if (typeof validation === 'string' || validation !== true) return validation;
+        if (typeof validation[0] === 'string') return validation;
     }
 
-    return true;
+    return [true, 200];
 
 }
 

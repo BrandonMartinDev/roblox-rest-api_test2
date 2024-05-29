@@ -6,6 +6,13 @@ import {
     type Response,
 } from 'express';
 
+
+// Import default types
+import {
+    type ValidatorReturnTupleValue
+} from "@v1types/main-types.js";
+
+
 // Import validator methods
 import { ValidateApiKey } from './apiKeyValidator.js';
 
@@ -14,30 +21,30 @@ import { ValidateApiKey } from './apiKeyValidator.js';
 // -- == [[ VALIDATOR METHODS ]] == -- \\
 
 // Validates whether the req has headers and has 'content-type' set to 'application/json'
-const ValidateRequestHeaders = (req: Request): boolean | string => {
+const ValidateRequestHeaders = (req: Request): ValidatorReturnTupleValue => {
 
     const reqHeaders = req.headers;
 
-    if (!reqHeaders) return "There was a problem getting the request's headers.";
-    if (!(reqHeaders['content-type'] === 'application/json')) return "Request header did not have its 'content-type' set to 'application/json'";
+    if (!reqHeaders) return ["There was a problem getting the request's headers.", 500];
+    if (!(reqHeaders['content-type'] === 'application/json')) return ["Request header did not have its 'content-type' set to 'application/json'", 406];
 
-    return true;
+    return [true, 200];
 
 }
 
 // Validates whether the req has a body
-const ValidateRequestBody = (req: Request): boolean | string => {
+const ValidateRequestBody = (req: Request): ValidatorReturnTupleValue => {
 
     const reqBody = req.body;
 
-    if (!reqBody) return "There was a problem getting the request's body";
+    if (!reqBody) return ["There was a problem getting the request's body", 500];
 
-    return true;
+    return [true, 200];
 
 }
 
 
-const ValidateRequestAll = (req: Request): (boolean | string) => {
+const ValidateRequestAll = (req: Request): ValidatorReturnTupleValue => {
 
     const headerValidation = ValidateRequestHeaders(req);
     const bodyValidation = ValidateRequestBody(req);
@@ -45,11 +52,11 @@ const ValidateRequestAll = (req: Request): (boolean | string) => {
 
     const validations = [headerValidation, bodyValidation, apiKeyValidation];
 
-    for (const validation of validations) {
-        if (typeof validation === 'string') return validation;
+    for (const validationData of validations) {
+        if (typeof validationData[0] === 'string') return validationData;
     }
 
-    return true;
+    return [true, 200];
 
 }
 
