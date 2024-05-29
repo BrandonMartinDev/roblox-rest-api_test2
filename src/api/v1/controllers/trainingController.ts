@@ -17,8 +17,9 @@ import {
 } from '@v1services/respondService.js';
 
 // Import validator methods
-import { ValidateRequestAll } from "@v1validators/requestValidator.js";
+import { ValidateTrainingAll } from "@v1validators/trainingValidator.js";
 import { SetGroupShout } from "@v1services/groupshoutService.js";
+import IPCanRequest from '../validators/ratelimitValidator.js';
 
 
 
@@ -26,13 +27,18 @@ import { SetGroupShout } from "@v1services/groupshoutService.js";
 
 // GET /api/v1/groupshout/
 export const GetTraining = (req: Request, res: Response) => {
+    
+    const requestValidate = IPCanRequest(req.ip, "training");
+    if (typeof requestValidate === 'string') return RespondWithError(res, requestValidate, 400);
+    
     return RespondWithSuccess(res, `${req.originalUrl} is OK`, 200);
+    
 }
 
 // POST /api/v1/groupshout/
 export const StartTraining = (req: Request, res: Response) => {
 
-    const requestValidate = ValidateRequestAll(req);
+    const requestValidate = ValidateTrainingAll(req);
 
     if (typeof requestValidate === 'string') return RespondWithError(res, requestValidate, 400);
 

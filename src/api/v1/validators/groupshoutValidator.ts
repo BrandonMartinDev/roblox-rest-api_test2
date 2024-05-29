@@ -8,6 +8,7 @@ import {
 
 // Import validator methods
 import { ValidateRequestAll } from './requestValidator.js';
+import IPCanRequest from './ratelimitValidator.js';
 
 
 
@@ -29,10 +30,12 @@ const ValidateGroupShoutAll = (req: Request): boolean | string => {
     const requestValidation = ValidateRequestAll(req);
     const bodyValidation = ValidateGroupShoutBody(req);
 
-    const validations = [requestValidation, bodyValidation];
+    const rateLimitValidation = IPCanRequest(req.ip, "groupshout");    
+
+    const validations = [requestValidation, bodyValidation, rateLimitValidation];
 
     for (const validation of validations) {
-        if (typeof validation === 'string') return validation;
+        if (typeof validation === 'string' || validation !== true) return validation;
     }
 
     return true;

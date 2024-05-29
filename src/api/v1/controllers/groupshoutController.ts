@@ -14,7 +14,10 @@ import {
 
 // Import validator methods
 import { ValidateGroupShoutAll } from "@v1validators/groupshoutValidator.js";
+import IPCanRequest from "@v1validators/ratelimitValidator.js";
 
+
+// Import services methods
 import { SetGroupShout } from "@v1services/groupshoutService.js";
 
 
@@ -23,7 +26,12 @@ import { SetGroupShout } from "@v1services/groupshoutService.js";
 
 // GET /api/v1/groupshout
 export const GetGroupShout = (req: Request, res: Response) => {
+    
+    const rateLimitValidation = IPCanRequest(req.ip, "groupshout");    
+    if (typeof rateLimitValidation === 'string') return RespondWithError(res, rateLimitValidation, 400);
+
     return RespondWithSuccess(res, `${req.originalUrl} is OK`, 200);
+    
 }
 
 // POST /api/v1/groupshout
