@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc && tsc-alias",
-    "dev": "nodemon dist/server"
+    "dev": "nodemon dist/server",
+    "start": "node dist/server"
   },
   "keywords": [],
   "author": "",
