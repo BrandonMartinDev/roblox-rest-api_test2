@@ -15,6 +15,7 @@ const v1Router = express.Router();
 // Import routers
 import groupShoutRouter from '@v1routes/groupshout.js';
 import trainingRouter from '@v1routes/training.js';
+import suspendRouter from '@v1routes/suspend.js';
 
 
 
@@ -22,6 +23,7 @@ import trainingRouter from '@v1routes/training.js';
 
 v1Router.use('/groupshout', groupShoutRouter);
 v1Router.use('/training', trainingRouter);
+v1Router.use('/suspend', suspendRouter);
 
 
 

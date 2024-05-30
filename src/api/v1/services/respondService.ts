@@ -5,7 +5,7 @@ import {
     type ServerResponseSuccess
 } from "../types/main-types.js";
 
-export const RespondWithSuccess = (res: Response, successMessage: string, statusCode: number) => {
+export const RespondWithSuccess = (res: Response, successMessage: string, statusCode: number = 200) => {
 
     const responseSuccess: ServerResponseSuccess = {
         message: successMessage
@@ -19,7 +19,7 @@ export const RespondWithSuccess = (res: Response, successMessage: string, status
 
 }
 
-export const RespondWithError = (res: Response, errorMessage: string, errorCode: number) => {
+export const RespondWithError = (res: Response, errorMessage: string, errorCode: number = 400) => {
 
     let resMessage: string;
 
