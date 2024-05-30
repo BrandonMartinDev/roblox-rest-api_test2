@@ -18,6 +18,10 @@ import { ValidateRequestAll } from './requestValidator.js';
 import IPCanRequest from './ratelimitValidator.js';
 
 
+// Import services methods
+import { GetRankInGroup } from "@v1services/groupRankService.js";
+
+
 
 // -- == [[ VALIDATOR METHODS ]] == -- \\
 
@@ -32,14 +36,25 @@ const ValidateSuspendBody = (req: Request): ValidatorReturnTupleValue => {
 
 }
 
+const ValidateUserIsInGroup = (userId: number): ValidatorReturnTupleValue => {
+
+    const rankInGroup = GetRankInGroup(userId);
+
+    if (!rankInGroup || typeof (rankInGroup) !== 'number' || rankInGroup === 0) return [`UserID: ${userId} is not in group`, 400];
+
+    return [true, 200];
+
+}
+
 const ValidateSuspendAll = (req: Request): ValidatorReturnTupleValue => {
 
     const requestValidation = ValidateRequestAll(req);
     const bodyValidation = ValidateSuspendBody(req);
+    const userInGroupValidation = ValidateUserIsInGroup(req.body.userId || 0);
 
-    const rateLimitValidation = IPCanRequest(req.ip, "suspend");    
+    const rateLimitValidation = IPCanRequest(req.ip, "suspend");
 
-    const validations = [requestValidation, bodyValidation, rateLimitValidation];
+    const validations = [requestValidation, bodyValidation, userInGroupValidation, rateLimitValidation];
 
     for (const validation of validations) {
         if (typeof validation[0] === 'string') return validation;
